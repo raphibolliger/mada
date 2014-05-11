@@ -29,11 +29,16 @@ public class encodePanel extends JPanel {
                 setInputTextFile();
             }
         });
-
         chooseOutputPath.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setOutPutPath();
+            }
+        });
+        encodeFile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                encodeTextFile();
             }
         });
 
@@ -47,6 +52,12 @@ public class encodePanel extends JPanel {
         add(chooseOutputPath);
         add(openAfterEncode);
         add(encodeFile);
+
+    }
+
+    private void encodeTextFile() {
+
+
 
     }
 
