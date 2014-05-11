@@ -1,12 +1,15 @@
 package ch.fhnw.mada.bonusaufgabe.logic;
 
-/**
- * Erstellt von raphi am 11.05.14.
- * Version : 1.0.0
- * Modul: algd1
- */
+import java.io.File;
+
 public class Encode {
 
+    private File inputFile;
+    private String outputPath;
 
+    public Encode(File inputFile, String outputPath)
+    {
+
+    }
 
 }
