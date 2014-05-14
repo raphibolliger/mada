@@ -29,4 +29,9 @@ public class TreeObject {
     {
         this.child0 = child0;
     }
+
+    public String getText()
+    {
+        return text;
+    }
 }

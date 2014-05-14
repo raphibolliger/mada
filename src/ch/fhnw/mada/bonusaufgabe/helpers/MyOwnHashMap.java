@@ -4,14 +4,14 @@ import java.util.HashMap;
 
 public class MyOwnHashMap {
 
-    private HashMap<Character, Integer> hashMap;
+    private HashMap<String, Integer> hashMap;
 
     public MyOwnHashMap()
     {
-        hashMap = new HashMap<Character, Integer>();
+        hashMap = new HashMap<String, Integer>();
     }
 
-    public void add(char c)
+    public void add(String c)
     {
         if (hashMap.containsKey(c))
             hashMap.put(c, hashMap.get(c) + 1);
@@ -19,9 +19,9 @@ public class MyOwnHashMap {
             hashMap.put(c, 1);
     }
 
-    public HashMap<Character, Integer> getHashMap()
+    public HashMap<String, Integer> getHashMap()
     {
-        return this.hashMap;
+        return (HashMap<String, Integer>) hashMap.clone();
     }
 
 }

@@ -10,7 +10,7 @@ public class DecodeData {
     private File inputFile;
     private String outputPath;
     private MyOwnHashMap caracterCountTable;
-    private HashMap<Character, String> decodingTable;
+    private HashMap<String, Integer> decodingTable;
 
     public DecodeData(File inputFile, String outputPath)
     {
