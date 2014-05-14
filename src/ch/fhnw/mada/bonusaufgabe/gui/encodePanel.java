@@ -1,11 +1,16 @@
 package ch.fhnw.mada.bonusaufgabe.gui;
 
+import ch.fhnw.mada.bonusaufgabe.helpers.FileManager;
+import ch.fhnw.mada.bonusaufgabe.logic.DecodeData;
+import ch.fhnw.mada.bonusaufgabe.logic.DecodeManager;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
 public class encodePanel extends JPanel {
 
@@ -57,7 +62,16 @@ public class encodePanel extends JPanel {
 
     private void encodeTextFile() {
 
+        DecodeManager decodeManager = new DecodeManager();
 
+        DecodeData decodeData = new DecodeData(inputTextFile, outputPath.getText());
+        try
+        {
+            decodeManager.decode(decodeData);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
 
     }
 

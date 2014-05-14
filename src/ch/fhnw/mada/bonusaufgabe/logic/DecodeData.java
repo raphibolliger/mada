@@ -16,6 +16,8 @@ public class DecodeData {
     {
         this.inputFile = inputFile;
         this.outputPath = outputPath;
+        caracterCountTable = new MyOwnHashMap();
+        decodingTable = new HashMap<String, Integer>();
     }
 
     public File getInputFile()

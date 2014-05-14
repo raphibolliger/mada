@@ -44,17 +44,22 @@ public class DecodeManager {
         TreeMap<String,Integer> sortedDecodeTreeMap = sortDecodeTreeMap(decodeTreeMap);
 
         Map.Entry<String,Integer> firstEntry = sortedDecodeTreeMap.firstEntry();
-        sortedDecodeTreeMap.remove(sortedDecodeTreeMap.firstKey());
+        sortedDecodeTreeMap.pollFirstEntry();
 
         Map.Entry<String,Integer> secondEntry = sortedDecodeTreeMap.firstEntry();
-        sortedDecodeTreeMap.remove(sortedDecodeTreeMap.firstKey());
+        sortedDecodeTreeMap.pollFirstEntry();
 
         TreeObject newTreeObject = new TreeObject();
         newTreeObject.setText(firstEntry.getKey()+ secondEntry.getKey());
-        decodeTreeMap.put(newTreeObject.getText(), firstEntry.getValue()+ secondEntry.getValue());
 
-        for(TreeObject treeObject : treeObjectsArray)
+        HashMap<String,Integer> hashMap = new HashMap<String, Integer>(sortedDecodeTreeMap);
+        hashMap.put(newTreeObject.getText(), firstEntry.getValue()+ secondEntry.getValue());
+
+        TreeMap<String, Integer> newNotSortedTreeMap = new TreeMap<String, Integer>(hashMap);
+
+        for(int i = 0; i < treeObjectsArray.size();i++)
         {
+            TreeObject treeObject = treeObjectsArray.get(i);
             if(treeObject.getText() == firstEntry.getKey())
             {
                 newTreeObject.setChild0(treeObject);
@@ -67,13 +72,13 @@ public class DecodeManager {
             }
         }
 
-        makeTree(treeObjectsArray, decodeTreeMap);
+        makeTree(treeObjectsArray, newNotSortedTreeMap);
     }
 
     private void SetParentAndAddToTreeObjectArray(ArrayList<TreeObject> treeObjectsArray, TreeObject newTreeObject, TreeObject treeObject)
     {
         treeObject.setParent(newTreeObject);
-        treeObjectsArray.add(newTreeObject);
+        treeObjectsArray.add(treeObjectsArray.size(), newTreeObject);
     }
 
     private TreeMap<String,Integer> sortDecodeTreeMap(TreeMap<String,Integer> decodeTreeMap)
@@ -91,9 +96,9 @@ public class DecodeManager {
 
         char[] inputArray = inputText.toCharArray();
 
-        for(char c: inputArray)
+        for(char c : inputArray)
         {
-            decodeData.getCaracterCountTable().add(c);
+            decodeData.getCaracterCountTable().add(String.valueOf(c));
         }
     }
 
@@ -112,9 +117,9 @@ public class DecodeManager {
         // Note: this comparator imposes orderings that are inconsistent with equals.
         public int compare(String a, String b) {
             if (base.get(a) >= base.get(b)) {
-                return -1;
-            } else {
                 return 1;
+            } else {
+                return -1;
             } // returning 0 would merge keys
         }
     }
