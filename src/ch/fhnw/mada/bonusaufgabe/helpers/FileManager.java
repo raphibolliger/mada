@@ -1,10 +1,10 @@
-package ch.fhnw.mada.bonusaufgabe.logic;
+package ch.fhnw.mada.bonusaufgabe.helpers;
 
 import java.io.*;
 
 public class FileManager {
 
-    public String readFile(File file) throws IOException
+    public static String readFile(File file) throws IOException
     {
         byte[] bFile = new byte[(int)file.length()];
         FileInputStream fileInputStream = new FileInputStream(file);
@@ -14,7 +14,7 @@ public class FileManager {
         return new String(bFile);
     }
 
-    public void writeFile(String outputPath, String fileName, byte[] bFile) throws IOException
+    public static void writeFile(String outputPath, String fileName, byte[] bFile) throws IOException
     {
         FileOutputStream fileOutputStream = new FileOutputStream(new File(outputPath, fileName));
         fileOutputStream.write(bFile);
