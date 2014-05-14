@@ -1,8 +1,10 @@
 package ch.fhnw.mada.bonusaufgabe.logic;
 
 import ch.fhnw.mada.bonusaufgabe.helpers.FileManager;
+import ch.fhnw.mada.bonusaufgabe.helpers.TreeObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class DecodeManager {
 
@@ -17,6 +19,8 @@ public class DecodeManager {
     {
 
     }
+
+    private void makeTree(ArrayList<TreeObject> treeObjectsArray, )
 
     private void generateDecodeTable(DecodeData decodeData) throws IOException
     {
