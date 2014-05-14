@@ -18,7 +18,7 @@ public class FileManager {
     {
         FileOutputStream fileOutputStream = new FileOutputStream(new File(outputPath, fileName));
         fileOutputStream.write(bFile);
-        fileOutputStream.close(); 
+        fileOutputStream.close();
     }
 
 
