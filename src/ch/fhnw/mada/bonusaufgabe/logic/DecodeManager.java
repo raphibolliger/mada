@@ -19,9 +19,9 @@ public class DecodeManager {
     private void generateDecodeTree(DecodeData decodeData)
     {
         ArrayList<TreeObject> intialTree = createInitialTree(decodeData.getCaracterCountTable());
-        TreeMap<String,Integer> abc = new TreeMap<String, Integer>();
-        abc.putAll(decodeData.getCaracterCountTable().getHashMap());
-        makeTree(intialTree, abc);
+        TreeMap<String,Integer> copiedCharacterCountTable = new TreeMap<String, Integer>();
+        copiedCharacterCountTable.putAll(decodeData.getCaracterCountTable().getHashMap());
+        makeTree(intialTree, copiedCharacterCountTable, decodeData);
     }
 
     private ArrayList<TreeObject> createInitialTree(MyOwnHashMap caracterCountTable)
@@ -36,10 +36,12 @@ public class DecodeManager {
         return initialTree;
     }
 
-    private void makeTree(ArrayList<TreeObject> treeObjectsArray, TreeMap<String,Integer> decodeTreeMap)
+    private void makeTree(ArrayList<TreeObject> treeObjectsArray, TreeMap<String, Integer> decodeTreeMap, DecodeData decodeData)
     {
-        if(decodeTreeMap.size() == 1)
+        if(decodeTreeMap.size() == 1) {
+            decodeData.setCompleteTree(treeObjectsArray);
             return;
+        }
 
         TreeMap<String,Integer> sortedDecodeTreeMap = sortDecodeTreeMap(decodeTreeMap);
 
@@ -72,7 +74,7 @@ public class DecodeManager {
             }
         }
 
-        makeTree(treeObjectsArray, newNotSortedTreeMap);
+        makeTree(treeObjectsArray, newNotSortedTreeMap, decodeData);
     }
 
     private void SetParentAndAddToTreeObjectArray(ArrayList<TreeObject> treeObjectsArray, TreeObject newTreeObject, TreeObject treeObject)
@@ -104,7 +106,22 @@ public class DecodeManager {
 
     private void generateDecodedFile(DecodeData decodeData)
     {
+        ArrayList<TreeObject> completeTree = decodeData.getCompleteTree();
+        for (int i= 0; i < decodeData.getCaracterCountTable().getSize(); i++)
+        {
+            TreeObject tempTreeObject = completeTree.get(i);
+            while (tempTreeObject.getParent() != null)
+            {
+                if (tempTreeObject.getParent().getChild0().equals(tempTreeObject))
+                    System.out.print(0);
+                else
+                    System.out.print(1);
 
+                tempTreeObject = tempTreeObject.getParent();
+            }
+            System.out.println();
+        }
+        System.out.print("Test");
     }
 
     class ValueComparator implements Comparator<String> {

@@ -24,4 +24,9 @@ public class MyOwnHashMap {
         return (HashMap<String, Integer>) hashMap.clone();
     }
 
+    public int getSize()
+    {
+       return hashMap.size();
+    }
+
 }

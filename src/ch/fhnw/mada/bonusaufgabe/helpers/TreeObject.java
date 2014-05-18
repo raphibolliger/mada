@@ -10,6 +10,18 @@ public class TreeObject {
     private TreeObject child1;
     private TreeObject child0;
 
+    public TreeObject getParent() {
+        return parent;
+    }
+
+    public TreeObject getChild1() {
+        return child1;
+    }
+
+    public TreeObject getChild0() {
+        return child0;
+    }
+
     public void setText(String text)
     {
         this.text = text;

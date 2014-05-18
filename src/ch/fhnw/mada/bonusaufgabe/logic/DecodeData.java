@@ -1,9 +1,12 @@
 package ch.fhnw.mada.bonusaufgabe.logic;
 
 import ch.fhnw.mada.bonusaufgabe.helpers.MyOwnHashMap;
+import ch.fhnw.mada.bonusaufgabe.helpers.TreeObject;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 public class DecodeData {
 
@@ -11,6 +14,15 @@ public class DecodeData {
     private String outputPath;
     private MyOwnHashMap caracterCountTable;
     private HashMap<String, Integer> decodingTable;
+    private ArrayList<TreeObject> completeTree;
+
+    public ArrayList<TreeObject> getCompleteTree() {
+        return completeTree;
+    }
+
+    public void setCompleteTree(ArrayList<TreeObject> completeTree) {
+        this.completeTree = completeTree;
+    }
 
     public DecodeData(File inputFile, String outputPath)
     {
