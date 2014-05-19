@@ -4,6 +4,7 @@ import ch.fhnw.mada.bonusaufgabe.helpers.FileManager;
 import ch.fhnw.mada.bonusaufgabe.helpers.MyOwnHashMap;
 import ch.fhnw.mada.bonusaufgabe.helpers.TreeObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -104,24 +105,46 @@ public class DecodeManager {
         }
     }
 
-    private void generateDecodedFile(DecodeData decodeData)
-    {
+    private void generateDecodedFile(DecodeData decodeData) throws IOException {
         ArrayList<TreeObject> completeTree = decodeData.getCompleteTree();
+        ArrayList<ArrayList<Integer>> codesForEachCharacter = new ArrayList<ArrayList<Integer>>();
         for (int i= 0; i < decodeData.getCaracterCountTable().getSize(); i++)
         {
             TreeObject tempTreeObject = completeTree.get(i);
+            ArrayList<Integer> abc = new ArrayList<Integer>();
             while (tempTreeObject.getParent() != null)
             {
                 if (tempTreeObject.getParent().getChild0().equals(tempTreeObject))
+                {
+                    abc.add(0);
                     System.out.print(0);
+                }
                 else
+                {
+                    abc.add(1);
                     System.out.print(1);
-
+                }
                 tempTreeObject = tempTreeObject.getParent();
+            }
+            Collections.reverse(abc);
+            codesForEachCharacter.add(abc);
+            System.out.println();
+        }
+
+
+        for (int i = 0; i < codesForEachCharacter.size(); i++)
+        {
+            for (int j = 0; j < codesForEachCharacter.get(i).size(); j++)
+            {
+                System.out.print(codesForEachCharacter.get(i).get(j));
             }
             System.out.println();
         }
-        System.out.print("Test");
+
+        File test = decodeData.getInputFile();
+        String test1 = FileManager.readFile(test);
+        System.out.println(test1);
+
     }
 
     class ValueComparator implements Comparator<String> {
