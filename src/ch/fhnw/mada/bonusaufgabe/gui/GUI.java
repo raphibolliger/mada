@@ -2,6 +2,8 @@ package ch.fhnw.mada.bonusaufgabe.gui;
 
 import ch.fhnw.mada.bonusaufgabe.logic.DecodeData;
 import ch.fhnw.mada.bonusaufgabe.logic.DecodeManager;
+import ch.fhnw.mada.bonusaufgabe.logic.EncodeData;
+import ch.fhnw.mada.bonusaufgabe.logic.EncodeManager;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -30,6 +32,8 @@ public class GUI extends JFrame {
         setTitle("Mathematik für die Datenkommunikation");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(540,250));
+
+        encodeFile();
 
         setLayout(new BorderLayout());
 
@@ -60,7 +64,7 @@ public class GUI extends JFrame {
                 DecodeData decodeData = new DecodeData(inputFile, outputPath.getText());
                 try
                 {
-                    decodeManager.decode(decodeData);
+                    decodeManager.decode(decodeData, openAfterEncode.isSelected());
                 } catch (IOException ex)
                 {
                     ex.printStackTrace();
@@ -132,6 +136,23 @@ public class GUI extends JFrame {
             textFiledInputFile.setText(inputFile.getAbsolutePath());
         }
 
+    }
+
+    private void readEncodeInputFile()
+    {
+
+    }
+
+    private void encodeFile()
+    {
+        EncodeManager encodeManager = new EncodeManager();
+        EncodeData encodeData = new EncodeData();
+        encodeManager.readInputFiles(new File("/Users/raphi/Desktop/output.dat"), new File("/Users/raphi/Desktop/dec_tab.txt"),encodeData);
+        encodeManager.convertByteArrayToBitRepresentationString(encodeData);
+        encodeManager.convertTableStringToHashMap(encodeData);
+        encodeManager.cutLastCharacters(encodeData);
+        encodeManager.encodeText(encodeData);
+        encodeManager.writeTextFile(encodeData);
     }
 
 }

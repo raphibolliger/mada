@@ -1,6 +1,5 @@
 package ch.fhnw.mada.bonusaufgabe.gui;
 
-import ch.fhnw.mada.bonusaufgabe.helpers.FileManager;
 import ch.fhnw.mada.bonusaufgabe.logic.DecodeData;
 import ch.fhnw.mada.bonusaufgabe.logic.DecodeManager;
 
@@ -67,7 +66,7 @@ public class encodePanel extends JPanel {
         DecodeData decodeData = new DecodeData(inputTextFile, outputPath.getText());
         try
         {
-            decodeManager.decode(decodeData);
+            decodeManager.decode(decodeData, openAfterEncode.isSelected());
         } catch (IOException e)
         {
             e.printStackTrace();

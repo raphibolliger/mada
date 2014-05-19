@@ -4,17 +4,18 @@ import ch.fhnw.mada.bonusaufgabe.helpers.FileManager;
 import ch.fhnw.mada.bonusaufgabe.helpers.MyOwnHashMap;
 import ch.fhnw.mada.bonusaufgabe.helpers.TreeObject;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
 public class DecodeManager {
 
-    public void decode(DecodeData decodeData) throws IOException
+    public void decode(DecodeData decodeData, boolean openAfterEncode) throws IOException
     {
         generateDecodeTable(decodeData);
         generateDecodeTree(decodeData);
-        generateDecodedFile(decodeData);
+        generateDecodedFile(decodeData, openAfterEncode);
     }
 
     private void generateDecodeTree(DecodeData decodeData)
@@ -105,7 +106,7 @@ public class DecodeManager {
         }
     }
 
-    private void generateDecodedFile(DecodeData decodeData) throws IOException {
+    private void generateDecodedFile(DecodeData decodeData, boolean openAfterEncode) throws IOException {
         ArrayList<TreeObject> completeTree = decodeData.getCompleteTree();
         ArrayList<ArrayList<Integer>> codesForEachCharacter = new ArrayList<ArrayList<Integer>>();
         for (int i= 0; i < decodeData.getCaracterCountTable().getSize(); i++)
@@ -115,34 +116,77 @@ public class DecodeManager {
             while (tempTreeObject.getParent() != null)
             {
                 if (tempTreeObject.getParent().getChild0().equals(tempTreeObject))
-                {
                     abc.add(0);
-                }
                 else
-                {
                     abc.add(1);
-                }
                 tempTreeObject = tempTreeObject.getParent();
             }
             Collections.reverse(abc);
             codesForEachCharacter.add(abc);
-            System.out.println();
         }
 
+        String completeCode = "";
+        HashMap<Character, String> tempMap = new HashMap<Character, String>();
         for (int i = 0; i < codesForEachCharacter.size(); i++)
         {
-            System.out.print(completeTree.get(i).getText());
-            System.out.print(" | ");
+            completeCode += completeTree.get(i).getText();
+            completeCode += ":";
+            String tempCode = "";
             for (int j = 0; j < codesForEachCharacter.get(i).size(); j++)
             {
-                System.out.print(codesForEachCharacter.get(i).get(j));
+                completeCode += codesForEachCharacter.get(i).get(j).toString();
+                tempCode += codesForEachCharacter.get(i).get(j).toString();
             }
-            System.out.println();
+            tempMap.put(completeTree.get(i).getText().charAt(0), tempCode);
+            completeCode += "-";
+        }
+        completeCode = completeCode.substring(0, completeCode.length()-1);
+        System.out.println(completeCode);
+
+        // generate complete bit string
+        String codedBitStream = "";
+        String inputFileString = FileManager.readFile(decodeData.getInputFile());
+        for (int i = 0; i < inputFileString.length(); i++)
+        {
+            codedBitStream += tempMap.get(inputFileString.charAt(i));
         }
 
-        File test = decodeData.getInputFile();
-        String test1 = FileManager.readFile(test);
-        System.out.println(test1);
+        int bitStringLength = codedBitStream.length();
+        if (bitStringLength%8 == 0)
+        {
+            codedBitStream += "10000000";
+        }
+        else
+        {
+            int rest = 8 - bitStringLength%8;
+            for (int i = 0; i < rest; i++)
+            {
+                if (i == 0) codedBitStream += "1";
+                else codedBitStream += "0";
+            }
+        }
+
+        int moduloFromString = codedBitStream.length()/8;
+        byte[] outputByteArray = new byte[moduloFromString];
+        for (int i = 0; i < moduloFromString; i++)
+        {
+            outputByteArray[i] = (byte)Short.parseShort(codedBitStream.substring(i*8, (i*8)+8), 2);
+        }
+
+
+
+        // write the dec_tab.txt
+        File file = new File(decodeData.getOutputPath()+"/dec_tab.txt");
+        if (file.exists()) file.delete();
+        FileManager.writeFile(decodeData.getOutputPath(),"dec_tab.txt", completeCode.getBytes());
+
+        if (openAfterEncode) Desktop.getDesktop().open(file);
+
+        // write the output.dat
+        File fileOutput = new File(decodeData.getOutputPath()+"/output.dat");
+        if (fileOutput.exists()) fileOutput.delete();
+        FileManager.writeFile(decodeData.getOutputPath(),"output.dat", outputByteArray);
+
 
     }
 

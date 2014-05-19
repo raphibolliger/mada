@@ -6,12 +6,9 @@ public class FileManager {
 
     public static String readFile(File file) throws IOException
     {
-        byte[] bFile = new byte[(int)file.length()];
-        FileInputStream fileInputStream = new FileInputStream(file);
-        fileInputStream.read(bFile);
-        fileInputStream.close();
+        byte[] bytes = readByteArray(file);
 
-        return new String(bFile);
+        return new String(bytes);
     }
 
     public static void writeFile(String outputPath, String fileName, byte[] bFile) throws IOException
@@ -22,4 +19,13 @@ public class FileManager {
     }
 
 
+    public static byte[] readByteArray(File inputEncodeFile) throws IOException
+    {
+        byte[] bFile = new byte[(int)inputEncodeFile.length()];
+        FileInputStream fileInputStream = new FileInputStream(inputEncodeFile);
+        fileInputStream.read(bFile);
+        fileInputStream.close();
+
+        return bFile;
+    }
 }
