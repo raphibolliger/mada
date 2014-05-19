@@ -117,12 +117,10 @@ public class DecodeManager {
                 if (tempTreeObject.getParent().getChild0().equals(tempTreeObject))
                 {
                     abc.add(0);
-                    System.out.print(0);
                 }
                 else
                 {
                     abc.add(1);
-                    System.out.print(1);
                 }
                 tempTreeObject = tempTreeObject.getParent();
             }
@@ -131,9 +129,10 @@ public class DecodeManager {
             System.out.println();
         }
 
-
         for (int i = 0; i < codesForEachCharacter.size(); i++)
         {
+            System.out.print(completeTree.get(i).getText());
+            System.out.print(" | ");
             for (int j = 0; j < codesForEachCharacter.get(i).size(); j++)
             {
                 System.out.print(codesForEachCharacter.get(i).get(j));
