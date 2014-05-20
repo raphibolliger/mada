@@ -2,6 +2,7 @@ package ch.fhnw.mada.bonusaufgabe.logic;
 
 import ch.fhnw.mada.bonusaufgabe.helpers.FileManager;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -71,10 +72,15 @@ public class EncodeManager {
     }
 
 
-    public void writeTextFile(EncodeData encodeData)
+    public void writeTextFile(EncodeData encodeData, String outputPath, boolean openAfterDecode)
     {
         try {
-            FileManager.writeFile("/Users/raphi/Desktop","blubber.txt",encodeData.getEncodedText().getBytes());
+            File temp = new File(outputPath+"/decoded_text.txt");
+            if (temp.exists()) temp.delete();
+
+            FileManager.writeFile(outputPath,"decoded_text.txt",encodeData.getEncodedText().getBytes());
+            if (openAfterDecode)
+                Desktop.getDesktop().open(temp);
         } catch (IOException e) {
             e.printStackTrace();
         }

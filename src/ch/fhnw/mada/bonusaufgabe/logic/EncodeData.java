@@ -39,7 +39,6 @@ public class EncodeData {
         this.inputTableString = inputTableString;
     }
 
-
     public byte[] getInputByteArray()
     {
         return inputByteArray;
