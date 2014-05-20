@@ -15,9 +15,6 @@ import java.io.IOException;
 
 public class GUI extends JFrame {
 
-    private JPanel encodePanel = new encodePanel();
-    private JPanel decodePanel = new JPanel();
-
     private JTextField textFieldTextInputFile = new JTextField("Bitte wählen Sie eine ASCII formatierte Textdatei aus");
     private JButton chooseInputTextFile = new JButton("Wählen...");
     private JTextField textFieldEncodingOutputPath = new JTextField("Bitte wählen Sie einen Ausgabefad aus");
@@ -177,7 +174,10 @@ public class GUI extends JFrame {
         add(tabbedPane, BorderLayout.CENTER);
 
         JLabel autor = new JLabel("by Andreas Lüscher / Florian Bruggisser / Raphael Bolliger", JLabel.CENTER);
+        autor.setPreferredSize(new Dimension(400,25));
         add(autor, BorderLayout.SOUTH);
+
+        setResizable(false);
 
         pack();
         setVisible(true);
