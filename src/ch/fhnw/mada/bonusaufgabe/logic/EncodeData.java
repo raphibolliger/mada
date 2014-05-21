@@ -2,8 +2,9 @@ package ch.fhnw.mada.bonusaufgabe.logic;
 
 import java.util.HashMap;
 
+
 /**
- * Created by raphi on 19.05.14.
+ * Date object for encoding data
  */
 public class EncodeData {
 
@@ -79,8 +80,7 @@ public class EncodeData {
         return inputDecodeTable;
     }
 
-    public void setInputDecodeTable(HashMap<String, Character> inputDecodeTable)
-    {
+    public void setInputDecodeTable(HashMap<String, Character> inputDecodeTable) {
         this.inputDecodeTable = inputDecodeTable;
     }
 }

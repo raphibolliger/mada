@@ -6,12 +6,14 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Created by raphi on 19.05.14.
- */
 public class EncodeManager {
 
-
+    /**
+     * Read the two input files and save it to the data object
+     * @param inputEncodeFile
+     * @param inputEncodeTable
+     * @param encodeData
+     */
     public void readInputFiles(File inputEncodeFile, File inputEncodeTable, EncodeData encodeData)
     {
 
@@ -24,12 +26,20 @@ public class EncodeManager {
         }
     }
 
+    /**
+     * Convert the input byte array to a bitstring
+     * @param encodeData
+     */
     public void convertByteArrayToBitRepresentationString(EncodeData encodeData)
     {
         for(byte b : encodeData.getInputByteArray())
             encodeData.addDecodedBitString(String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0'));
     }
 
+    /**
+     * Convert the dec_table to a hasmap
+     * @param encodeData
+     */
     public void convertTableStringToHashMap(EncodeData encodeData)
     {
         String[] splittedDecodeTable = SplitDecodeTable(encodeData.getInputTableString());
@@ -45,6 +55,10 @@ public class EncodeManager {
         return decodeTable.split("-");
     }
 
+    /**
+     * Cut the last bits
+     * @param encodeData
+     */
     public void cutLastCharacters(EncodeData encodeData)
     {
         String inputBitRepresentation = encodeData.getDecodedBitString();
@@ -52,6 +66,10 @@ public class EncodeManager {
         encodeData.setDecodedBitString(inputBitRepresentation);
     }
 
+    /**
+     * Write the decompressed string tho the data Object
+     * @param encodeData
+     */
     public void encodeText(EncodeData encodeData)
     {
         int pos = 0;
@@ -71,14 +89,19 @@ public class EncodeManager {
 
     }
 
-
+    /**
+     * Write the decompressed textfile
+     * @param encodeData
+     * @param outputPath
+     * @param openAfterDecode
+     */
     public void writeTextFile(EncodeData encodeData, String outputPath, boolean openAfterDecode)
     {
         try {
-            File temp = new File(outputPath+"/decoded_text.txt");
+            File temp = new File(outputPath+"/decompress.txt");
             if (temp.exists()) temp.delete();
 
-            FileManager.writeFile(outputPath,"decoded_text.txt",encodeData.getEncodedText().getBytes());
+            FileManager.writeFile(outputPath,"decompress.txt",encodeData.getEncodedText().getBytes());
             if (openAfterDecode)
                 Desktop.getDesktop().open(temp);
         } catch (IOException e) {
