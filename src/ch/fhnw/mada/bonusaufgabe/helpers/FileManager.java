@@ -6,22 +6,21 @@ public class FileManager {
 
     /**
      * Read a file and returns the byte array as a string
-     * @param file
-     * @return
+     * @param file inputFile
+     * @return String with content of file
      * @throws IOException
      */
     public static String readFile(File file) throws IOException
     {
         byte[] bytes = readByteArray(file);
-
         return new String(bytes);
     }
 
     /**
      * Write a file whit outputpath and name
-     * @param outputPath
-     * @param fileName
-     * @param bFile
+     * @param outputPath outputPath
+     * @param fileName outputFile name
+     * @param bFile byte array
      * @throws IOException
      */
     public static void writeFile(String outputPath, String fileName, byte[] bFile) throws IOException
