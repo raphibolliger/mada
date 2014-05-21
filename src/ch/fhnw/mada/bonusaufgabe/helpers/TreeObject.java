@@ -1,7 +1,7 @@
 package ch.fhnw.mada.bonusaufgabe.helpers;
 
 /**
- * Created by raphi on 14.05.14.
+ * TreeObject for one hemming tree knot
  */
 public class TreeObject {
 

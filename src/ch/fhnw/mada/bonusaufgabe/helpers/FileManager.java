@@ -4,6 +4,12 @@ import java.io.*;
 
 public class FileManager {
 
+    /**
+     * Read a file and returns the byte array as a string
+     * @param file
+     * @return
+     * @throws IOException
+     */
     public static String readFile(File file) throws IOException
     {
         byte[] bytes = readByteArray(file);
@@ -11,6 +17,13 @@ public class FileManager {
         return new String(bytes);
     }
 
+    /**
+     * Write a file whit outputpath and name
+     * @param outputPath
+     * @param fileName
+     * @param bFile
+     * @throws IOException
+     */
     public static void writeFile(String outputPath, String fileName, byte[] bFile) throws IOException
     {
         FileOutputStream fileOutputStream = new FileOutputStream(new File(outputPath, fileName));
@@ -18,7 +31,12 @@ public class FileManager {
         fileOutputStream.close();
     }
 
-
+    /**
+     * Read a file and returns the byte array
+     * @param inputEncodeFile
+     * @return
+     * @throws IOException
+     */
     public static byte[] readByteArray(File inputEncodeFile) throws IOException
     {
         byte[] bFile = new byte[(int)inputEncodeFile.length()];

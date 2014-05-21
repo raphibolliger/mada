@@ -2,6 +2,9 @@ package ch.fhnw.mada.bonusaufgabe.helpers;
 
 import java.util.HashMap;
 
+/**
+ * HashMap to saves how many times each character is in the text
+ */
 public class MyOwnHashMap {
 
     private HashMap<String, Integer> hashMap;
@@ -11,6 +14,10 @@ public class MyOwnHashMap {
         hashMap = new HashMap<String, Integer>();
     }
 
+    /**
+     * Adds a charachter to the hashmap and count up the value when it already exists
+     * @param c
+     */
     public void add(String c)
     {
         if (hashMap.containsKey(c))
