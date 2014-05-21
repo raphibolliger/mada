@@ -6,8 +6,10 @@ import ch.fhnw.mada.bonusaufgabe.helpers.TreeObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.TreeMap;
 
+/**
+ * Date object for decoding data
+ */
 public class DecodeData {
 
     private File inputFile;

@@ -11,6 +11,12 @@ import java.util.*;
 
 public class DecodeManager {
 
+    /**
+     * Invokes all nescessary methods
+     * @param decodeData
+     * @param openAfterEncode
+     * @throws IOException
+     */
     public void decode(DecodeData decodeData, boolean openAfterEncode) throws IOException
     {
         generateDecodeTable(decodeData);
@@ -18,6 +24,10 @@ public class DecodeManager {
         generateDecodedFile(decodeData, openAfterEncode);
     }
 
+    /**
+     * Generates the complete hamming tree and saves all knots to the data object
+     * @param decodeData
+     */
     private void generateDecodeTree(DecodeData decodeData)
     {
         ArrayList<TreeObject> intialTree = createInitialTree(decodeData.getCaracterCountTable());
@@ -26,6 +36,7 @@ public class DecodeManager {
         makeTree(intialTree, copiedCharacterCountTable, decodeData);
     }
 
+    // helper to create the initial tree wiht all single characters
     private ArrayList<TreeObject> createInitialTree(MyOwnHashMap caracterCountTable)
     {
         ArrayList<TreeObject> initialTree = new ArrayList<TreeObject>();
@@ -38,6 +49,7 @@ public class DecodeManager {
         return initialTree;
     }
 
+    // creates with the initial tree and the encodeTable the hamming tree
     private void makeTree(ArrayList<TreeObject> treeObjectsArray, TreeMap<String, Integer> decodeTreeMap, DecodeData decodeData)
     {
         if(decodeTreeMap.size() == 1) {
@@ -79,6 +91,7 @@ public class DecodeManager {
         makeTree(treeObjectsArray, newNotSortedTreeMap, decodeData);
     }
 
+    // helper for maketree
     private void SetParentAndAddToTreeObjectArray(ArrayList<TreeObject> treeObjectsArray, TreeObject newTreeObject, TreeObject treeObject)
     {
         treeObject.setParent(newTreeObject);
@@ -107,6 +120,8 @@ public class DecodeManager {
     }
 
     private void generateDecodedFile(DecodeData decodeData, boolean openAfterEncode) throws IOException {
+
+        // go throu the tree and generate for each character the code representation
         ArrayList<TreeObject> completeTree = decodeData.getCompleteTree();
         ArrayList<ArrayList<Integer>> codesForEachCharacter = new ArrayList<ArrayList<Integer>>();
         for (int i= 0; i < decodeData.getCaracterCountTable().getSize(); i++)
@@ -121,10 +136,12 @@ public class DecodeManager {
                     abc.add(1);
                 tempTreeObject = tempTreeObject.getParent();
             }
+            // becaus the start is at the root of the tree at the end the code must be reversed
             Collections.reverse(abc);
             codesForEachCharacter.add(abc);
         }
 
+        // generates a tem hasmap wiht characters and their 0101 representation
         String completeCode = "";
         HashMap<Character, String> tempMap = new HashMap<Character, String>();
         for (int i = 0; i < codesForEachCharacter.size(); i++)
@@ -151,6 +168,8 @@ public class DecodeManager {
             codedBitStream += tempMap.get(inputFileString.charAt(i));
         }
 
+
+        // add the last bits to reach a complete byte
         int bitStringLength = codedBitStream.length();
         if (bitStringLength%8 == 0)
         {
@@ -166,14 +185,13 @@ public class DecodeManager {
             }
         }
 
-        int moduloFromString = codedBitStream.length()/8;
-        byte[] outputByteArray = new byte[moduloFromString];
-        for (int i = 0; i < moduloFromString; i++)
+        // convert the bitRepresentationString to a bytes and add it to a array
+        int divisionFromString = codedBitStream.length()/8;
+        byte[] outputByteArray = new byte[divisionFromString];
+        for (int i = 0; i < divisionFromString; i++)
         {
             outputByteArray[i] = (byte)Short.parseShort(codedBitStream.substring(i*8, (i*8)+8), 2);
         }
-
-
 
         // write the dec_tab.txt
         File file = new File(decodeData.getOutputPath()+"/dec_tab.txt");
